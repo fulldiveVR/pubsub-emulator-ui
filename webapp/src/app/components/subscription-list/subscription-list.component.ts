@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
-import { Subscription, Topic } from 'src/app/services/pubsub.service';
+import { Subscription, Topic } from 'src/app/services/pubsub/pubsub.service';
 import { NewSubscriptionDialogComponent, NewSubscriptionRequest } from './new-subscription-dialog/new-subscription-dialog.component';
 
 @Component({

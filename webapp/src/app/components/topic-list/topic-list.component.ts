@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
-import { Topic } from 'src/app/services/pubsub.service';
+import { Topic } from 'src/app/services/pubsub/pubsub.service';
 import { NewTopicDialogComponent } from './new-topic-dialog/new-topic-dialog.component';
 
 @Component({

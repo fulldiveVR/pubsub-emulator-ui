@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Observable, tap } from 'rxjs';
-import { PubsubMessage, PubsubService, Subscription, Topic } from 'src/app/services/pubsub.service';
+import { PubsubMessage, PubsubService, Subscription, Topic } from 'src/app/services/pubsub/pubsub.service';
 import { NewSubscriptionRequest } from '../subscription-list/new-subscription-dialog/new-subscription-dialog.component';
 
 @Component({

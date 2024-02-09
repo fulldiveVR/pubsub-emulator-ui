@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PubsubService } from 'src/app/services/pubsub.service';
+import { PubsubService } from 'src/app/services/pubsub/pubsub.service';
 
 @Component({
   selector: 'app-navbar',

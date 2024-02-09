@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { PushConfig, Topic } from 'src/app/services/pubsub.service';
+import { PushConfig, Topic } from 'src/app/services/pubsub/pubsub.service';
 
 @Component({
   selector: 'app-new-subscription-dialog',

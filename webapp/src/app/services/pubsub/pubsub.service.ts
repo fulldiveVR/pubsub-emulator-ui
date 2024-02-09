@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, map, Observable, ReplaySubject } from 'rxjs';
-import { NewSubscriptionRequest } from '../components/subscription-list/new-subscription-dialog/new-subscription-dialog.component';
-import { environment } from '../../environments/environment';
+import { StorageService } from '../storage/storage.service';
+import { NewSubscriptionRequest } from '../../components/subscription-list/new-subscription-dialog/new-subscription-dialog.component';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PubsubService {
   project_id = environment.projectId
   public currentHost = "http://localhost:8681"
 
-  private _projectList = new BehaviorSubject<string[]>([this.project_id])
+  private _projectList = new BehaviorSubject<string[]>([])
   private _currentProject = new ReplaySubject<string>()
   private _currentTopic = new ReplaySubject<Topic>()
   private _currentSubscription = new ReplaySubject<Subscription>()
@@ -22,7 +23,9 @@ export class PubsubService {
   public currentTopic$ = this._currentTopic.asObservable()
   public currentSubscription$ = this._currentSubscription.asObservable()
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: StorageService) {
+    const projectList = storage.load('projectList') ?? [this.project_id]
+    this._projectList.next(projectList)
 
     this.currentProject$.subscribe(project =>
       this.topicList$ = this.listTopics(project)
@@ -38,6 +41,15 @@ export class PubsubService {
     newList.push(newProject)
 
     this._projectList.next(newList)
+
+    this.storage.save('projectList', newList)
+  }
+
+  detachProject(project: string) {
+    const newList = this._projectList.getValue().filter(p => p !== project)
+    this._projectList.next(newList)
+    
+    this.storage.save('projectList', newList)
   }
 
   createTopic(projectId: string = this.project_id, topicId: string){
@@ -47,7 +59,7 @@ export class PubsubService {
   }
 
   listTopics(projectId: string = this.project_id) {
-    return this.http.get<{ topics: Topic[] }>(`${this.currentHost}/v1/projects/${this.project_id}/topics`).pipe(map(incoming => incoming?.topics || []))
+    return this.http.get<{ topics: Topic[] }>(`${this.currentHost}/v1/projects/${projectId}/topics`).pipe(map(incoming => incoming?.topics || []))
   }
 
   createSubscription(projectId: string, request: NewSubscriptionRequest){

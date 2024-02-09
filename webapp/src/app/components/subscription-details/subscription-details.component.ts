@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EMPTY, firstValueFrom, map, Observable } from 'rxjs';
-import { PubsubService, ReceivedMessage, Subscription } from 'src/app/services/pubsub.service';
+import { PubsubService, ReceivedMessage, Subscription } from 'src/app/services/pubsub/pubsub.service';
 
 @Component({
   selector: 'app-subscription-details',

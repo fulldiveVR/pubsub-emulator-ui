@@ -5,13 +5,14 @@
     </div>
 
     <div class="project-list">
+        <div *ngFor="let project of (this.projectList$|async)">
+            <button mat-raised-button class="project" [routerLink]="['project']" [queryParams]="{'project': project}">
+                {{project}}
+            </button>
+            <button mat-raised-button color="warn" (click)="removeProject(project)">Remove</button>
+        </div>
 
-        <button mat-raised-button class="project" *ngFor="let project of (this.projectList$|async)"
-        [routerLink]="['project']" [queryParams]="{'project': project}">
-            {{project}}
-        </button>
-
-        <button mat-stroked-button class="new-project">
+        <button mat-stroked-button class="new-project" (click)="newProject()">
             <mat-icon>add_circle</mat-icon>
             Attach new project
         </button>
