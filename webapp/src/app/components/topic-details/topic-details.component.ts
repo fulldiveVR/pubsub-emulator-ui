@@ -11,19 +11,30 @@ export class TopicDetailsComponent implements OnInit {
 
   @Input() topic?: Topic
 
-  @Output() onMessagePublish = new EventEmitter<{ topic: Topic, message: string }>()
+  @Output() onMessagePublish = new EventEmitter<{ 
+    topic: Topic, 
+    message: string, 
+    attributes: { [key: string]: string } 
+  }>()
 
   public inputField = new FormControl('', Validators.required)
+  public keyField = new FormControl('pattern')
+  public valueField = new FormControl('')
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   publishMessage() {
     console.log("this value was found", this.inputField.value)
 
-    this.onMessagePublish.emit({ topic: this.topic!, message: this.inputField.value })
-    this.inputField.reset()
+    this.onMessagePublish.emit({ 
+      topic: this.topic!, 
+      message: this.inputField.value, 
+      attributes: { [this.keyField.value]: this.valueField.value }
+    });
+
+    [this.inputField, this.valueField].forEach((field) => field.reset())
   }
 
 }

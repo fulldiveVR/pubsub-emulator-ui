@@ -2,15 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, map, Observable, ReplaySubject } from 'rxjs';
 import { NewSubscriptionRequest } from '../components/subscription-list/new-subscription-dialog/new-subscription-dialog.component';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PubsubService {
-  project_id = "test-project"
+  project_id = environment.projectId
   public currentHost = "http://localhost:8681"
 
-  private _projectList = new BehaviorSubject<string[]>(["test-project"])
+  private _projectList = new BehaviorSubject<string[]>([this.project_id])
   private _currentProject = new ReplaySubject<string>()
   private _currentTopic = new ReplaySubject<Topic>()
   private _currentSubscription = new ReplaySubject<Subscription>()

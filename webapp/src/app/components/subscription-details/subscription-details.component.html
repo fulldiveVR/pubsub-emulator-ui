@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>Timestamp</th>
+                    <th>Attributes</th>
                     <th>Message</th>
                     <th>Ack</th>
                 </tr>
@@ -24,6 +25,7 @@
             <tbody>
                 <tr *ngFor="let msg of this.messages" class="pubsub-message">
                     <td>{{msg.message.publishTime | date : "long"}}</td>
+                    <td>{{msg.message.attributes | json}}</td>
                     <td>{{msg.message.data}}</td>
                     <td>
                         <button mat-button color="warn" (click)="this.ackMessage(msg.ackId)">Ack</button>
